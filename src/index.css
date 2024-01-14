@@ -1,0 +1,100 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-size: 1rem;
+  font-weight: 400;
+
+
+  background-color: #090808;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*{
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  box-sizing: border-box;
+  
+}
+
+.header-cardapio{
+  background-image: url('./assets/capa-desktop.jpg');
+  background-repeat: no-repeat;
+  background-size: 100% 237%;
+  background-position: 100% 77%;
+}
+.header-bg{
+  background-image: url('./assets/capa-desktop.jpg');
+  background-repeat: no-repeat;
+  background-size: 100% 237%;
+  background-position: 100% 77%;
+}
+
+@media(max-width:580px){
+  .header-bg{
+    background-image: url('./assets/home-header-shadow.jpg');
+    background-size: cover;
+    background-position: center;
+  }
+  .header-cardapio{
+     background-image: url('./assets/header_cardapio.jpg');
+     background-size: cover;
+     background-position: center;
+  }
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* *****  END START RAITING STYLE *******/
+
+/*  Works for Firefox */
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+
+.animateFadeOut{
+  animation: fadeOut 1s linear forwards;
+  animation-delay: 2s;
+}
+
+.animateFadeIn{
+  animation: fadeIn 1s linear forwards;
+  animation-delay: 1s;
+}
+@keyframes fadeOut{
+  0%{
+    opacity: 1;
+  }
+  100%{
+    opacity: 0;
+  }
+  100%{
+    display: none;
+  }
+
+  
+}
+
+@keyframes fadeIn{
+  0%{
+    display: none;
+    opacity: 0;
+  }
+  100%{
+    opacity: 1;
+  } 
+}
+
+
