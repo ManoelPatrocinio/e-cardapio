@@ -1,7 +1,10 @@
 export type Product = {
-    //   id: string;
+    id: string;
     name: string;
-    price:number
+    price:number;
+    ingredients: string; 
+    category: "hamburguer" |"bebidas";
+    imgsUrl: string[];
     
 }
 

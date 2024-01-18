@@ -32,20 +32,20 @@ export function ProductDetail() {
     const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, checked } = event.target;
         setFormData((prevFormData) => {
-          if (checked) {
-            return { ...prevFormData, drinks: [...prevFormData.drinks!, name] };
-          } else {
-            return { ...prevFormData, drinks: prevFormData.drinks!.filter((option) => option !== name) };
-          }
+            if (checked) {
+                return { ...prevFormData, drinks: [...prevFormData.drinks!, name] };
+            } else {
+                return { ...prevFormData, drinks: prevFormData.drinks!.filter((option) => option !== name) };
+            }
         });
-      };
+    };
     function handleSubmit(event: React.FormEvent) {
         event.preventDefault();
         // Atualizar o estado do formulário apenas no envio, usando o evento do formulário
-        const formDataFromEvent: any= {
+        const formDataFromEvent: any = {
             name: "exemple",
             price: 8,
-            quantity: parseInt( (event.target as any).quantity.defaultValue),
+            quantity: parseInt((event.target as any).quantity.defaultValue),
             observation: (event.target as any).observation.defaultValue,
             drinks: formData.drinks
         };
@@ -56,7 +56,16 @@ export function ProductDetail() {
     }
     return (
         <>
-            <header className="w-screen md:w-full h-[35vh] md:h-[45vh]">
+            <header className="relative w-screen md:w-full h-[35vh] md:h-[45vh]">
+                <a
+                    href="/"
+                    className="absolute top-4 left-4 w-10 h-6 flex justify-center items-center bg-black bg-opacity-55  rounded-xl "
+                >
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fillRule="evenodd" clipRule="evenodd" d="M14.7501 8C14.7501 8.19891 14.6711 8.38968 14.5304 8.53033C14.3897 8.67098 14.199 8.75 14.0001 8.75H3.81007L6.53007 11.47C6.60376 11.5387 6.66286 11.6215 6.70385 11.7135C6.74485 11.8055 6.76689 11.9048 6.76866 12.0055C6.77044 12.1062 6.75192 12.2062 6.7142 12.2996C6.67647 12.393 6.62033 12.4778 6.54911 12.549C6.47789 12.6203 6.39306 12.6764 6.29967 12.7141C6.20628 12.7518 6.10625 12.7704 6.00555 12.7686C5.90485 12.7668 5.80553 12.7448 5.71353 12.7038C5.62153 12.6628 5.53873 12.6037 5.47007 12.53L1.47007 8.53C1.32962 8.38937 1.25073 8.19875 1.25073 8C1.25073 7.80125 1.32962 7.61062 1.47007 7.47L5.47007 3.47C5.61225 3.33752 5.80029 3.2654 5.9946 3.26882C6.1889 3.27225 6.37428 3.35096 6.51169 3.48838C6.64911 3.62579 6.72782 3.81118 6.73125 4.00548C6.73468 4.19978 6.66255 4.38782 6.53007 4.53L3.81007 7.25H14.0001C14.199 7.25 14.3897 7.32902 14.5304 7.46967C14.6711 7.61032 14.7501 7.80109 14.7501 8Z" fill="#F8F8F8" />
+                    </svg>
+
+                </a>
                 <img src={ProductExem} className="w-full h-full object-cover" alt="hamburgues" />
             </header>
             <main className="w-full md:w-2/3 mx-auto h-full min-h-[65vh] md:min-h-[55vh] flex flex-col items-center px-6 md:px-10 mb-6 bg-dark-900">
@@ -102,11 +111,11 @@ export function ProductDetail() {
                                 <label htmlFor="optRefrigerante" className="text-lg text-orange-900 font-semibold flex justify-between">Suco natural 500 ml <span className="text-green-600 ">R$ 7,00</span></label>
                                 <div className="w-full bg-whiter-900 h-[2px] rounded "></div>
                             </div>
-                            <input 
-                                type="checkbox" 
-                                name="Refrigerante" 
-                                id="optRefrigerante" 
-                                defaultValue={"Refrigerante 1l"} 
+                            <input
+                                type="checkbox"
+                                name="Refrigerante"
+                                id="optRefrigerante"
+                                defaultValue={"Refrigerante 1l"}
                                 className="ml-4"
                                 onChange={handleCheckboxChange}
                             />
@@ -116,13 +125,13 @@ export function ProductDetail() {
                                 <label htmlFor="optSucoNatural" className="text-lg text-orange-900 font-semibold flex justify-between">Refrigerante 1L <span className="text-green-600 ">R$ 7,00</span></label>
                                 <div className="w-full bg-whiter-900 h-[2px] rounded "></div>
                             </div>
-                            <input 
-                                type="checkbox" 
-                                name="SucoNatural" 
-                                id="optSucoNatural" 
-                                defaultValue={"Suco Natural"} 
+                            <input
+                                type="checkbox"
+                                name="SucoNatural"
+                                id="optSucoNatural"
+                                defaultValue={"Suco Natural"}
                                 className="ml-4"
-                                onChange={handleCheckboxChange} 
+                                onChange={handleCheckboxChange}
                             />
                         </div>
                     </div>

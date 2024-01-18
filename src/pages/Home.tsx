@@ -6,10 +6,9 @@ export function Home() {
     }
     return (
         <div className='transition-all ease-in-out relative bg-dark-900'>
-            <div className="w-screen h-screen absolute left-0 top-0 bg-splash-mobile bg-no-repeat bg-cover md:bg-splash-desktop animateFadeOut  ">
-            </div>
+          
 
-            <div className="w-screen h-screen flex flex-col justify-start items-start  bg-splash-mobile bg-no-repeat bg-cover md:bg-splash-desktop animateFadeIn ">
+            <div className="w-screen h-screen flex flex-col justify-start items-start  bg-splash-mobile bg-no-repeat bg-cover md:bg-splash-desktop  ">
                 <div className='header-bg w-full h-[45vh]'></div>
 
                 <div className='w-full h-[55vh]  flex flex-col justify-start items-center p-2 bg-dark-900'>

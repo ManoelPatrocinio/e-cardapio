@@ -43,6 +43,13 @@ export function Location() {
                 </svg>
 
             </a>
+            <a 
+                    href="/"
+                    className="block w-full text-center text-whiter-900 underline mt-6"
+                >
+                   Voltar
+
+                </a>
         </main>
         <Footer />
     </>)

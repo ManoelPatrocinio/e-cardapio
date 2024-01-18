@@ -22,7 +22,7 @@
   padding: 0;
   list-style: none;
   box-sizing: border-box;
-  
+  scroll-behavior: smooth;
 }
 
 .header-cardapio{
@@ -80,9 +80,7 @@ input[type='number'] {
   100%{
     opacity: 0;
   }
-  100%{
-    display: none;
-  }
+  
 
   
 }

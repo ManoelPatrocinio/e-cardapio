@@ -1,8 +1,11 @@
 import { Link } from "react-router-dom";
 import cardapio_header from "../assets/header_cardapio.jpg"
+import { Product as ProdType } from "../types/types";
 
-
-export function Product() {
+type Prop ={
+    item:ProdType;
+}
+export function Product({item}:Prop) {
 
     function whatsAppLink(){
         const wppNumber = import.meta.env.VITE_WHATSAPP_NUMBER
@@ -15,12 +18,12 @@ export function Product() {
                 <header className="w-full flex flex-col">
                     <div className="w-full flex justify-between">
 
-                        <h2 className="text-base text-left text-orange-900 font-titles ">Duplo Burguer</h2>
-                        <p className="text-lg text-left text-green-600 font-bold">R$ 8,00</p>
+                        <h2 className="text-base text-left text-orange-900 font-titles ">{item.name}</h2>
+                        <p className="text-lg text-left text-green-600 font-bold">R$ {item.price}</p>
                     </div>
                     <div className="w-full h-[1px] bg-white mt-1"></div>
                 </header>
-                <p className="w-full text-left text-whiter-900 my-2">Pão,  2 carnes, queijo, tomate e alface.</p>
+                <p className="w-full text-left text-whiter-900 my-2">{item.ingredients}</p>
 
                 <button 
                     onClick={()=>whatsAppLink()}

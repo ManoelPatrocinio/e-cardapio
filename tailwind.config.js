@@ -17,8 +17,8 @@ export default {
         titles: "Galindo, sans-serif",
       },
       backgroundImage: {
-        'splash-mobile': "url('./public/giuliana-catachura-xB8ImC3ty7A-unsplash.jpg')",
-        'splash-desktop': "url('./public/capa_0asa1).jpg')",
+        'splash-mobile': "url('./public/capa_mobile.jpg')",
+        'splash-desktop': "url('./public/capa_descktop.jpg')",
       },
       animation: {
         fadeOut: 'fadeOut 2s linear forwards ',

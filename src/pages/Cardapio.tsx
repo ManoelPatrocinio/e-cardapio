@@ -1,10 +1,52 @@
+import { useEffect, useState } from "react";
 import { Footer } from "../components/Footer"
 import { Product } from "../components/Product"
+import { Products } from "../datas/produtos"
+import { Pagination } from "../components/Pagination";
+import { Product as  ProdType } from "../types/types";
 export function Cardapio() {
+
+    const itemsPerPage = 8;
+    const [currentPage, setCurrentPage] = useState(0);
+    const [currentPageData, setCurrentPageData] = useState<ProdType[]>([]);
+    const [filteredProducts, setFilteredProducts] = useState<ProdType[]>(Products.filter((item)=>item.category === "hamburguer"))
+    let totalItems = filteredProducts.length;
+
+    const handlePageChange = (page:number) => {
+      // Lógica para obter os itens da página atual a partir do array total de itens
+      const startIndex = (page - 1) * itemsPerPage;
+      const endIndex = startIndex + itemsPerPage;
+      const pageData = filteredProducts.slice(startIndex, endIndex);
+  
+      setCurrentPage(Math.max(1, page));
+      setCurrentPageData(pageData);
+    };
+
+    function filterByCategory(catSelected:string){
+        const filteredProds:ProdType[] = Products.filter((item)=>item.category === catSelected)
+        setFilteredProducts(filteredProds);
+        handlePageChange(1);
+    }
+    useEffect(()=>{
+        handlePageChange(1);
+    },[filteredProducts])
+  
+    console.log("filteredProducts",filteredProducts)
+    console.log("totalItems",totalItems)
     return (
         <>
-            <header className="w-full h-[30vh] md:h-[45vh] header-cardapio"></header>
-            <div className="w-full h-full min-h-[70vh] flex flex-col justify-center bg-dark-900 mb-6">
+            <header className="relative w-full h-[30vh] md:h-[45vh] header-cardapio">
+                <a
+                    href="/"
+                    className="absolute top-4 left-4 w-10 h-6 flex justify-center items-center bg-black bg-opacity-55  rounded-xl "
+                >
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fillRule="evenodd" clipRule="evenodd" d="M14.7501 8C14.7501 8.19891 14.6711 8.38968 14.5304 8.53033C14.3897 8.67098 14.199 8.75 14.0001 8.75H3.81007L6.53007 11.47C6.60376 11.5387 6.66286 11.6215 6.70385 11.7135C6.74485 11.8055 6.76689 11.9048 6.76866 12.0055C6.77044 12.1062 6.75192 12.2062 6.7142 12.2996C6.67647 12.393 6.62033 12.4778 6.54911 12.549C6.47789 12.6203 6.39306 12.6764 6.29967 12.7141C6.20628 12.7518 6.10625 12.7704 6.00555 12.7686C5.90485 12.7668 5.80553 12.7448 5.71353 12.7038C5.62153 12.6628 5.53873 12.6037 5.47007 12.53L1.47007 8.53C1.32962 8.38937 1.25073 8.19875 1.25073 8C1.25073 7.80125 1.32962 7.61062 1.47007 7.47L5.47007 3.47C5.61225 3.33752 5.80029 3.2654 5.9946 3.26882C6.1889 3.27225 6.37428 3.35096 6.51169 3.48838C6.64911 3.62579 6.72782 3.81118 6.73125 4.00548C6.73468 4.19978 6.66255 4.38782 6.53007 4.53L3.81007 7.25H14.0001C14.199 7.25 14.3897 7.32902 14.5304 7.46967C14.6711 7.61032 14.7501 7.80109 14.7501 8Z" fill="#F8F8F8" />
+                    </svg>
+
+                </a>
+            </header>
+            <div className="w-full h-full min-h-[70vh] flex flex-col justify-center bg-dark-900 mb-6" id="prodListContainer">
                 <h1 className="w-full text-center text-3xl text-orange-900 font-semibold font-titles mt-4">Cardápio</h1>
 
                 <div className="flex justify-center gap-3 my-8">
@@ -12,39 +54,40 @@ export function Cardapio() {
                         <svg width="28" height="25" viewBox="0 0 28 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M3.7642 9.57617C3.60457 9.39489 3.49101 9.18288 3.43187 8.95574C3.37274 8.7286 3.36953 8.49211 3.42249 8.26367C4.20854 4.83398 8.46358 2.34375 13.5417 2.34375C18.6198 2.34375 22.8749 4.83398 23.6609 8.26367C23.7145 8.49228 23.7117 8.72906 23.6529 8.95655C23.5941 9.18404 23.4806 9.39644 23.321 9.57808C23.1614 9.75972 22.9597 9.90597 22.7307 10.006C22.5016 10.1061 22.2512 10.1574 21.9978 10.1562H5.08557C4.83234 10.157 4.58217 10.1052 4.35348 10.0048C4.12479 9.90442 3.92342 9.75794 3.7642 9.57617ZM24.2544 14.8906L19.9031 16.3555L15.975 14.8994C15.7733 14.825 15.5483 14.825 15.3466 14.8994L11.4322 16.3457L7.51143 14.8994C7.31841 14.8282 7.10377 14.8251 6.90841 14.8906L2.25346 16.4531C2.05672 16.5331 1.9003 16.6791 1.81596 16.8616C1.73161 17.0441 1.72565 17.2494 1.7993 17.4358C1.87294 17.6222 2.02066 17.7758 2.21248 17.8653C2.40431 17.9549 2.62585 17.9737 2.83215 17.918L4.23181 17.4502V17.9687C4.23181 19.0048 4.67766 19.9983 5.47127 20.7309C6.26488 21.4634 7.34125 21.875 8.46358 21.875H18.6198C19.7422 21.875 20.8185 21.4634 21.6121 20.7309C22.4058 19.9983 22.8516 19.0048 22.8516 17.9687V17.0244L24.8331 16.3594C24.9442 16.3294 25.0475 16.2786 25.1365 16.2103C25.2255 16.142 25.2984 16.0575 25.3507 15.9621C25.4029 15.8668 25.4334 15.7625 25.4403 15.6558C25.4471 15.5492 25.4302 15.4423 25.3905 15.3419C25.3509 15.2415 25.2893 15.1497 25.2097 15.0721C25.13 14.9946 25.034 14.9329 24.9275 14.891C24.821 14.849 24.7063 14.8277 24.5906 14.8283C24.4748 14.8289 24.3604 14.8515 24.2544 14.8945V14.8906ZM2.5391 13.2812H24.5443C24.7688 13.2812 24.9841 13.1989 25.1428 13.0524C25.3015 12.9059 25.3907 12.7072 25.3907 12.5C25.3907 12.2928 25.3015 12.0941 25.1428 11.9476C24.9841 11.8011 24.7688 11.7187 24.5443 11.7187H2.5391C2.31464 11.7187 2.09936 11.8011 1.94064 11.9476C1.78192 12.0941 1.69275 12.2928 1.69275 12.5C1.69275 12.7072 1.78192 12.9059 1.94064 13.0524C2.09936 13.1989 2.31464 13.2812 2.5391 13.2812Z" fill="#F8F8F8" />
                         </svg>
-                        <p className="text-lg text-whiter-900 font-titles leading-4">Lanches</p>
+                        <button 
+                            type="button" 
+                            className="text-lg text-whiter-900 font-titles leading-4"
+                            onClick={()=>filterByCategory("hamburguer")}
+                        >Lanches</button>
                     </div>
                     <div className="flex gap-1 justify-start items-end">
                         <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M8.93913 3.65625C8.93913 3.11753 9.15314 2.60087 9.53407 2.21994C9.915 1.83901 10.4317 1.625 10.9704 1.625H15.0329C15.509 1.62494 15.97 1.79212 16.3354 2.09736C16.7008 2.40261 16.9474 2.8265 17.032 3.29503C17.1167 3.76356 17.0341 4.24694 16.7986 4.66076C16.5632 5.07459 16.1898 5.39255 15.7438 5.55913C15.9063 6.38381 16.4588 7.0655 17.2941 7.89262C18.2427 8.58001 19.012 9.48547 19.5372 10.5326C20.0624 11.5797 20.328 12.7378 20.3117 13.9092V13.9311L20.3125 13.975V21.125C20.3124 21.7373 20.1394 22.3371 19.8134 22.8553C19.4873 23.3735 19.0215 23.7891 18.4696 24.0542C17.9177 24.3193 17.3022 24.4231 16.6938 24.3536C16.0855 24.2842 15.5092 24.0443 15.0313 23.6616C14.4554 24.1242 13.7387 24.3759 13 24.375C12.2614 24.3759 11.5446 24.1242 10.9688 23.6616C10.4908 24.0443 9.91449 24.2842 9.30617 24.3536C8.69786 24.4231 8.0823 24.3193 7.5304 24.0542C6.97849 23.7891 6.51269 23.3735 6.18665 22.8553C5.86061 22.3371 5.68758 21.7373 5.68751 21.125V13.8117C5.68521 12.0558 6.31709 10.3581 7.46688 9.03094C7.74346 8.71073 8.0474 8.41522 8.37526 8.14775C9.36244 7.19225 10.0198 6.45775 10.1912 5.53312C9.82034 5.37908 9.50347 5.11857 9.28062 4.78451C9.05776 4.45045 8.93893 4.05782 8.93913 3.65625ZM10.9704 3.25C10.8626 3.25 10.7593 3.2928 10.6831 3.36899C10.6069 3.44517 10.5641 3.54851 10.5641 3.65625C10.5641 3.76399 10.6069 3.86733 10.6831 3.94351C10.7593 4.0197 10.8626 4.0625 10.9704 4.0625H15.0329C15.1406 4.0625 15.244 4.0197 15.3201 3.94351C15.3963 3.86733 15.4391 3.76399 15.4391 3.65625C15.4391 3.54851 15.3963 3.44517 15.3201 3.36899C15.244 3.2928 15.1406 3.25 15.0329 3.25H10.9704ZM9.89057 8.9375H16.0404C15.2116 8.10713 14.3934 7.14837 14.1456 5.85H11.7845C11.5375 7.14269 10.7226 8.10469 9.89057 8.9375ZM7.31251 21.125C7.31251 21.4741 7.42496 21.814 7.6332 22.0942C7.84143 22.3744 8.13438 22.5801 8.46866 22.6809C8.80294 22.7816 9.16077 22.772 9.48916 22.6535C9.81756 22.5349 10.099 22.3138 10.2919 22.0228C10.3661 21.9112 10.4667 21.8196 10.5848 21.7563C10.7028 21.693 10.8348 21.6598 10.9688 21.6598C11.1028 21.6598 11.2347 21.693 11.3528 21.7563C11.4708 21.8196 11.5714 21.9112 11.6456 22.0228C11.7935 22.2467 11.9947 22.4305 12.231 22.5576C12.4674 22.6847 12.7316 22.7513 13 22.7513C13.2684 22.7513 13.5326 22.6847 13.769 22.5576C14.0053 22.4305 14.2065 22.2467 14.3544 22.0228C14.4286 21.9112 14.5292 21.8196 14.6473 21.7563C14.7653 21.693 14.8973 21.6598 15.0313 21.6598C15.1653 21.6598 15.2972 21.693 15.4153 21.7563C15.5333 21.8196 15.6339 21.9112 15.7081 22.0228C15.901 22.3138 16.1825 22.5349 16.5108 22.6535C16.8392 22.772 17.1971 22.7816 17.5314 22.6809C17.8656 22.5801 18.1586 22.3744 18.3668 22.0942C18.5751 21.814 18.6875 21.4741 18.6875 21.125V19.5H7.31251V21.125Z" fill="#F8F8F8" />
                         </svg>
 
-                        <p className="text-lg text-whiter-900 font-titles leading-4">Bebidas</p>
+                        <button 
+                            type="button"
+                            className="text-lg text-whiter-900 font-titles leading-4"
+                            onClick={()=>filterByCategory("bebidas")}
+                            >Bebidas</button>
 
                     </div>
                 </div>
                 <div className="relative flex flex-col w-full md:w-1/2 h-max mb-4 md:mx-auto px-3 gap-y-4">
-                    <Product />
-                    <Product />
-                    <Product />
-                    <Product />
-                    <Product />
-                    <Product />
-                    <Product />
-                    <Product />
-                    <Product />
-                    <Product />
+                    {currentPageData.map((item) => (
+                        <Product item={item} key={item.id}/>
+                    ))}
                 </div>
 
-                <div>
-                    <ul className="flex justify-center items-center text-lg gap-4 text-whiter-900">
-                        <li className="transition-all hover:text-xl hover:underline hover:font-medium">1</li>
-                        <li className="transition-all hover:text-xl hover:underline hover:font-medium">2</li>
-                        <li className="transition-all hover:text-xl hover:underline hover:font-medium">3</li>
-                    </ul>
-                </div>
+                <Pagination
+                    totalItems={totalItems}
+                    itemsPerPage={itemsPerPage}
+                    currentPage={currentPage}
+                    onPageChange={handlePageChange}
+                />
             </div>
-            <Footer/>
+           
+            <Footer />
 
         </>)
 }
