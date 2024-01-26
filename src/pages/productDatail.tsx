@@ -13,6 +13,17 @@ export function ProductDetail() {
 
     });
 
+    function sendOrderBywhatsApp(order:Order) {
+        const mensage = `
+            ${order.quantity} - hamburgues, \n
+            com a(s) bebida(s): ${order.drinks!.length > 0 ? order.drinks : "sem bebidas" },
+            observações:${order.observation!.length > 0 ? order.observation : "sem ob"}
+
+
+        `
+        const wppNumber = import.meta.env.VITE_WHATSAPP_NUMBER
+        window.location.href = `http://api.whatsapp.com/send?l=pt_BR&phone=+${wppNumber}?&text=${mensage} `;
+    }
     const handleProdQtd = (arg: boolean) => {
         if (arg) {
             setFormData({
@@ -41,24 +52,26 @@ export function ProductDetail() {
     };
     function handleSubmit(event: React.FormEvent) {
         event.preventDefault();
+        console.log("event", event)
         // Atualizar o estado do formulário apenas no envio, usando o evento do formulário
         const formDataFromEvent: any = {
             name: "exemple",
             price: 8,
-            quantity: parseInt((event.target as any).quantity.defaultValue),
-            observation: (event.target as any).observation.defaultValue,
+            quantity: formData.quantity,
+            observation: (event.target as any).observation.value,
             drinks: formData.drinks
         };
-        setFormData(formDataFromEvent);
 
         // Faça algo com os dados do formulário, por exemplo, envie para um servidor
         console.log('Dados do formulário:', formDataFromEvent);
+        sendOrderBywhatsApp(formDataFromEvent)
     }
+
     return (
         <>
             <header className="relative w-screen md:w-full h-[35vh] md:h-[45vh]">
                 <a
-                    href="/"
+                    href="/cardapio"
                     className="absolute top-4 left-4 w-10 h-6 flex justify-center items-center bg-black bg-opacity-55  rounded-xl "
                 >
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -89,7 +102,8 @@ export function ProductDetail() {
                             <input
                                 type="number"
                                 className="w-1/2 h-full text-center text-lg text-orange-900 font-medium py-2 bg-transparent focus:border-none focus:outline-none"
-                                defaultValue={formData.quantity}
+                                value={formData.quantity}
+                                readOnly
                                 name="quantity"
                                 id="prodQTD"
                             />
@@ -108,21 +122,7 @@ export function ProductDetail() {
                     <div className="w-full flex flex-col items-center px-6 md:px-10  gap-y-10">
                         <div className="w-full flex justify-center items-center ">
                             <div className="w-full">
-                                <label htmlFor="optRefrigerante" className="text-lg text-orange-900 font-semibold flex justify-between">Suco natural 500 ml <span className="text-green-600 ">R$ 7,00</span></label>
-                                <div className="w-full bg-whiter-900 h-[2px] rounded "></div>
-                            </div>
-                            <input
-                                type="checkbox"
-                                name="Refrigerante"
-                                id="optRefrigerante"
-                                defaultValue={"Refrigerante 1l"}
-                                className="ml-4"
-                                onChange={handleCheckboxChange}
-                            />
-                        </div>
-                        <div className="w-full flex justify-center items-center ">
-                            <div className="w-full">
-                                <label htmlFor="optSucoNatural" className="text-lg text-orange-900 font-semibold flex justify-between">Refrigerante 1L <span className="text-green-600 ">R$ 7,00</span></label>
+                                <label htmlFor="optSucoNatural" className="text-lg text-orange-900 font-semibold flex justify-between">Suco natural 500 ml <span className="text-green-600 ">R$ 7,00</span></label>
                                 <div className="w-full bg-whiter-900 h-[2px] rounded "></div>
                             </div>
                             <input
@@ -134,6 +134,21 @@ export function ProductDetail() {
                                 onChange={handleCheckboxChange}
                             />
                         </div>
+                        <div className="w-full flex justify-center items-center ">
+                            <div className="w-full">
+                                <label htmlFor="optRefrigerante" className="text-lg text-orange-900 font-semibold flex justify-between">Refrigerante 1L <span className="text-green-600 ">R$ 7,00</span></label>
+                                <div className="w-full bg-whiter-900 h-[2px] rounded "></div>
+                            </div>
+                            <input
+                                type="checkbox"
+                                name="Refrigerante"
+                                id="optRefrigerante"
+                                defaultValue={"Refrigerante 1l"}
+                                className="ml-4"
+                                onChange={handleCheckboxChange}
+                            />
+                        </div>
+
                     </div>
 
                     <div className="px-2  my-8 md:py-10">
