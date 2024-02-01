@@ -1,10 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ProductExem from "../assets/capa-desktop.jpg"
 import { Footer } from "../components/Footer";
-import { Order } from "../types/types";
+import { Order, Product } from "../types/types";
+import { useNavigate, useParams } from "react-router-dom";
+import { Products } from "../datas/produtos";
 
 
 export function ProductDetail() {
+    const navigate = useNavigate();
+    const [product, setProduct] = useState<Product| null>(null)
+    const {productId} = useParams() 
+    
     const [formData, setFormData] = useState<Order>({
         product: null,
         quantity: 1,
@@ -12,6 +18,16 @@ export function ProductDetail() {
         drinks: []
 
     });
+  
+    useEffect(()=>{
+        const product = Products.find((item)=> item.id === productId )
+        product != undefined && setProduct(product)
+        if (!product) {
+            navigate("/cardapio");
+        }
+    },[])
+
+  
 
     function sendOrderBywhatsApp(order:Order) {
         const mensage = `
@@ -28,13 +44,15 @@ export function ProductDetail() {
         if (arg) {
             setFormData({
                 ...formData,
-                quantity: formData.quantity! + 1
+                quantity: formData.quantity ? formData.quantity + 1 : 1
+
             });
         } else {
             if (formData.quantity! > 1) {
                 setFormData({
                     ...formData,
-                    quantity: formData.quantity! - 1
+                    quantity: formData.quantity ? formData.quantity - 1 : 1
+
                 });
             }
         }
@@ -69,6 +87,7 @@ export function ProductDetail() {
 
     return (
         <>
+
             <header className="relative w-screen md:w-full h-[35vh] md:h-[45vh]">
                 <a
                     href="/cardapio"
@@ -82,10 +101,10 @@ export function ProductDetail() {
                 <img src={ProductExem} className="w-full h-full object-cover" alt="hamburgues" />
             </header>
             <main className="w-full md:w-2/3 mx-auto h-full min-h-[65vh] md:min-h-[55vh] flex flex-col items-center px-6 md:px-10 mb-6 bg-dark-900">
-                <h1 className="w-full text-left  text-2xl text-orange-900 font-semibold font-titles mt-4 md:mt-10 mb-3">Duble Burguer</h1>
-                <p className="w-full h-full text-whiter-900 text-left text-lg"> <span className=" font-bold text-orange-900">Ingredientes:</span> Pão,  2 carnes, queijo, tomate e alface.</p>
+                <h1 className="w-full text-left  text-2xl text-orange-900 font-semibold font-titles mt-4 md:mt-10 mb-3">{product?.name}</h1>
+                <p className="w-full h-full text-whiter-900 text-left text-lg"> <span className=" font-bold text-orange-900">Ingredientes:</span>{product?.ingredients}</p>
 
-                <p className="w-full h-full text-xl text-whiter-900 text-left font-semibold mt-4">Preço: <span className="text-green-600">R$:8,00</span></p>
+                <p className="w-full h-full text-xl text-whiter-900 text-left font-semibold mt-4">Preço: <span className="text-green-600">R$:{product?.price}</span></p>
 
 
                 <form onSubmit={(event: React.FormEvent) => handleSubmit(event)} className="w-full">

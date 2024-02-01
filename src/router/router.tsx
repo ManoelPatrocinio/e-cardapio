@@ -14,7 +14,7 @@ export const routers = createBrowserRouter([
     element: <Cardapio/>,
   },
   {
-    path: "/:productName/:productId",
+    path: "/cardapio/:productName/:productId",
     element: <ProductDetail/>,
   },
   {

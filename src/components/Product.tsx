@@ -13,7 +13,7 @@ export function Product({item}:Prop) {
     }
     return (
         <div className="w-full flex justify-start items-start gap-4 pb-4 mb-  border-b-2 border-[#1d1d1d]  rounded-md ">
-            <Link to={"/duble/123"} className="w-[5rem] md:w-[7rem] h-[5rem] md:h-[7rem] rounded-full mt-4"><img src={cardapio_header} alt="hambúrguer" className="w-full h-full rounded-full" /></Link>
+            <Link to={`${item.name}/${item.id}`} className="w-[5rem] md:w-[7rem] h-[5rem] md:h-[7rem] rounded-full mt-4"><img src={cardapio_header} alt="hambúrguer" className="w-full h-full rounded-full" /></Link>
             <div className="w-[65%] md:w-[80%]">
                 <header className="w-full flex flex-col">
                     <div className="w-full flex justify-between">
