@@ -19,7 +19,7 @@ export function Product({item}:Prop) {
                     <div className="w-full flex justify-between">
 
                         <h2 className="text-base text-left text-orange-900 font-titles ">{item.name}</h2>
-                        <p className="text-lg text-left text-green-600 font-bold">R$ {item.price}</p>
+                        <p className="text-lg text-left text-green-600 text-nowrap font-bold">R$ {item.price.toPrecision(3)}</p>
                     </div>
                     <div className="w-full h-[1px] bg-white mt-1"></div>
                 </header>

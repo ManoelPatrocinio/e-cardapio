@@ -8,9 +8,9 @@ import { Products } from "../datas/produtos";
 
 export function ProductDetail() {
     const navigate = useNavigate();
-    const [product, setProduct] = useState<Product| null>(null)
-    const {productId} = useParams() 
-    
+    const [product, setProduct] = useState<Product | null>(null)
+    const { productId } = useParams()
+
     const [formData, setFormData] = useState<Order>({
         product: null,
         quantity: 1,
@@ -18,21 +18,21 @@ export function ProductDetail() {
         drinks: []
 
     });
-  
-    useEffect(()=>{
-        const product = Products.find((item)=> item.id === productId )
+
+    useEffect(() => {
+        const product = Products.find((item) => item.id === productId)
         product != undefined && setProduct(product)
         if (!product) {
             navigate("/cardapio");
         }
-    },[])
+    }, [])
 
-  
 
-    function sendOrderBywhatsApp(order:Order) {
+
+    function sendOrderBywhatsApp(order: Order) {
         const mensage = `
             ${order.quantity} - hamburgues, \n
-            com a(s) bebida(s): ${order.drinks!.length > 0 ? order.drinks : "sem bebidas" },
+            com a(s) bebida(s): ${order.drinks!.length > 0 ? order.drinks : "sem bebidas"},
             observações:${order.observation!.length > 0 ? order.observation : "sem ob"}
 
 
@@ -104,7 +104,7 @@ export function ProductDetail() {
                 <h1 className="w-full text-left  text-2xl text-orange-900 font-semibold font-titles mt-4 md:mt-10 mb-3">{product?.name}</h1>
                 <p className="w-full h-full text-whiter-900 text-left text-lg"> <span className=" font-bold text-orange-900">Ingredientes:</span>{product?.ingredients}</p>
 
-                <p className="w-full h-full text-xl text-whiter-900 text-left font-semibold mt-4">Preço: <span className="text-green-600">R$:{product?.price}</span></p>
+                <p className="w-full h-full text-xl text-whiter-900 text-left font-semibold mt-4">Preço: <span className="text-green-600">R$:{product?.price.toPrecision(3)}</span></p>
 
 
                 <form onSubmit={(event: React.FormEvent) => handleSubmit(event)} className="w-full">
@@ -138,36 +138,24 @@ export function ProductDetail() {
                     </div>
                     <h2 className="w-full text-center  text-xl text-orange-900 font-semibold font-titles mt-4 mb-3">Bebidas</h2>
 
-                    <div className="w-full flex flex-col items-center px-6 md:px-10  gap-y-10">
-                        <div className="w-full flex justify-center items-center ">
-                            <div className="w-full">
-                                <label htmlFor="optSucoNatural" className="text-lg text-orange-900 font-semibold flex justify-between">Suco natural 500 ml <span className="text-green-600 ">R$ 7,00</span></label>
-                                <div className="w-full bg-whiter-900 h-[2px] rounded "></div>
-                            </div>
-                            <input
-                                type="checkbox"
-                                name="SucoNatural"
-                                id="optSucoNatural"
-                                defaultValue={"Suco Natural"}
-                                className="ml-4"
-                                onChange={handleCheckboxChange}
-                            />
-                        </div>
-                        <div className="w-full flex justify-center items-center ">
-                            <div className="w-full">
-                                <label htmlFor="optRefrigerante" className="text-lg text-orange-900 font-semibold flex justify-between">Refrigerante 1L <span className="text-green-600 ">R$ 7,00</span></label>
-                                <div className="w-full bg-whiter-900 h-[2px] rounded "></div>
-                            </div>
-                            <input
-                                type="checkbox"
-                                name="Refrigerante"
-                                id="optRefrigerante"
-                                defaultValue={"Refrigerante 1l"}
-                                className="ml-4"
-                                onChange={handleCheckboxChange}
-                            />
-                        </div>
 
+                    <div className="w-full h-[128px] overflow-y-auto flex flex-col items-center  md:px-10  gap-y-10">
+                        {Products.filter((item) => item.category === "bebidas")
+                            .map((item) => (
+                                <div className="w-full flex justify-center items-center" key={item.id}>
+                                    <div className="w-full">
+                                        <label htmlFor="optSucoNatural" className="text-lg text-orange-900 font-semibold flex justify-between">{item.name} <span className="text-green-600 text-nowrap ">R$ {item.price.toPrecision(3)}</span></label>
+                                        <div className="w-full bg-whiter-900 h-[2px] rounded "></div>
+                                    </div>
+                                    <input
+                                        type="checkbox"
+                                        name="SucoNatural"
+                                        id="optSucoNatural"
+                                        className="ml-4"
+                                        onChange={handleCheckboxChange}
+                                    />
+                                </div>
+                        ))}
                     </div>
 
                     <div className="px-2  my-8 md:py-10">

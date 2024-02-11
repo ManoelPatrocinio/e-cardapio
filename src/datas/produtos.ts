@@ -91,7 +91,7 @@ export const Products:Product[] = [
     },
     {
         id:"12",
-        name: "Sola Botanto",
+        name: "Sola Botando",
         ingredients: "Pão, Carne, 1 Ovos, Bacon, Presunto, 1 Salsicha, Queijo, Batata Palha, Tomate e Alface.",
         price: 13.00,
         category: "hamburguer",
@@ -115,17 +115,33 @@ export const Products:Product[] = [
     },
     {
         id:"15",
-        name: "Refrigerante skin 1L",
+        name: "Refrigerante Skin Guaraná 1L",
         ingredients: "Sempre bem gelado para casar perfeitamente com aquele lanche quentinho.",
-        price: 7.00,
+        price: 6.00,
         category: "bebidas",
         imgsUrl:[""]
     },
     {
         id:"16",
-        name: "Suco Natural 500ml",
+        name: "Refrigerante Skin Laranja 1L",
+        ingredients: "Sempre bem gelado para casar perfeitamente com aquele lanche quentinho.",
+        price: 6.00,
+        category: "bebidas",
+        imgsUrl:[""]
+    },
+    {
+        id:"17",
+        name: "Suco natural de Goiaba 500ml",
         ingredients: "A opção perfeita e saudável, para aproveitar com aquele lanche quentinho.",
-        price: 7.00,
+        price: 5.50,
+        category: "bebidas",
+        imgsUrl:[""]
+    },
+    {
+        id:"18",
+        name: "Suco natural de Maracujina 500ml",
+        ingredients: "A opção perfeita e saudável, para aproveitar com aquele lanche quentinho.",
+        price: 5.50,
         category: "bebidas",
         imgsUrl:[""]
     }
