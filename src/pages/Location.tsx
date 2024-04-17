@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Footer } from "../components/Footer";
 
 export function Location() {
@@ -30,8 +31,8 @@ export function Location() {
 
             </button>
             <p className="w-full text-center  text-white text-lg my-4">Ou</p>
-            <a
-                href="https://www.instagram.com/hambuguer_de_siri_mj/"
+            <Link
+                to="https://www.instagram.com/hambuguer_de_siri_mj/"
                 className="flex justify-center items-center gap-2 w-[80%] md:w-1/3 text-whiter-900 text-lg font-medium text-center  py-3 mx-auto rounded-md bg-gradient-to-r from-purple-500 to-pink-500"
                 target="_blank"
             >
@@ -42,14 +43,14 @@ export function Location() {
                     <path d="M15.3125 5.69763L15.3225 5.68663" stroke="#F8F8F8" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
 
-            </a>
-            <a 
-                    href="/"
+            </Link>
+            <Link
+                    to="/"
                     className="block w-full text-center text-whiter-900 underline mt-6"
                 >
                    Voltar
 
-                </a>
+                </Link>
         </main>
         <Footer />
     </>)

@@ -48,8 +48,8 @@ export function Home() {
                                 </svg>
                             </button>
 
-                            <a
-                                href="https://www.instagram.com/hambuguer_de_siri_mj/"
+                            <Link
+                                to="https://www.instagram.com/hambuguer_de_siri_mj/"
                                 target='_blank'
                             >
                                 <svg width="26" height="26" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -70,7 +70,7 @@ export function Home() {
                                         </radialGradient>
                                     </defs>
                                 </svg>
-                            </a>
+                            </Link>
 
 
                         </div>

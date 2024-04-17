@@ -1,8 +1,10 @@
+import { Link } from "react-router-dom";
+
 export function Footer() {
     return (
         <footer className="w-full py-4 text-center">
-            <a
-                href="https://www.instagram.com/hambuguer_de_siri_mj/"
+            <Link
+                to="https://www.instagram.com/hambuguer_de_siri_mj/"
                 className="w-full flex justify-center items-center gap-2 text-center text-base text-whiter-900"
             >
                 <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -11,7 +13,7 @@ export function Footer() {
                     <path d="M15.3125 5.69763L15.3225 5.68663" stroke="#F8F8F8" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
                 Siga-nos no Instagram
-            </a>
+            </Link>
             <a href="https://manoelpatrocinio.vercel.app/" className="text-whiter-900 text-xs" target="_blank">Copyright &copy; - Criado por Manoel Patrocínio, {new Date().getFullYear()}</a>
         </footer>
     )

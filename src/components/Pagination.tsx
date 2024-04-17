@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 type Prop = {
     totalItems: number;
     itemsPerPage: number;
@@ -19,10 +21,10 @@ export const Pagination = ({ totalItems, itemsPerPage, currentPage, onPageChange
                     className={i === currentPage ? 'text-orange-900 text-lg transition-all hover:text-xl underline hover:font-medium cursor-pointer' : 'text-white text-lg transition-all hover:text-xl hover:underline hover:font-medium cursor-pointer'}
                     onClick={() => onPageChange(i)}
                 >
-                    <a href="#prodListContainer">
+                    <Link to="#prodListContainer">
 
                         {i}
-                    </a>
+                    </Link>
 
                 </li>
 
