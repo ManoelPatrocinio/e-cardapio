@@ -89,7 +89,7 @@ export function ProductDetail() {
 
         // Faça algo com os dados do formulário, por exemplo, envie para um servidor
         console.log('Dados do formulário:', formDataFromEvent);
-        // sendOrderBywhatsApp(formDataFromEvent)
+        sendOrderBywhatsApp(formDataFromEvent)
     }
 
     return (
