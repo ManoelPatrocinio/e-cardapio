@@ -62,7 +62,7 @@ export function ProductDetail() {
     };
 
     const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>, drink: Product) => {
-        const { name, checked } = event.target;
+        const {checked } = event.target;
         setFormData((prevFormData) => {
             if (checked) {
                 const newTotal = prevFormData.total + drink.price
