@@ -14,6 +14,7 @@ export function ProductDetail() {
     const [formData, setFormData] = useState<Order>({
         product: null,
         quantity: 1,
+        total: 0,
         observation: '',
         drinks: []
 
@@ -21,10 +22,11 @@ export function ProductDetail() {
 
     useEffect(() => {
         const product = Products.find((item) => item.id === productId)
-        product != undefined && setProduct(product)
         if (!product) {
             navigate("/cardapio");
         }
+        setProduct(product!)
+        setFormData((prevData) => { return { ...prevData, total: product!.price } })
     }, [])
 
 
@@ -41,40 +43,45 @@ export function ProductDetail() {
         window.location.href = `http://api.whatsapp.com/send?l=pt_BR&phone=+${wppNumber}?&text=${mensage} `;
     }
     const handleProdQtd = (arg: boolean) => {
-        if (arg) {
-            setFormData({
-                ...formData,
-                quantity: formData.quantity ? formData.quantity + 1 : 1
 
-            });
-        } else {
-            if (formData.quantity! > 1) {
-                setFormData({
-                    ...formData,
-                    quantity: formData.quantity ? formData.quantity - 1 : 1
+        setFormData((prevFormData) => {
+            if (!arg && prevFormData.quantity >= 1) {
+                const newQuantity = formData.quantity ? formData.quantity - 1 : 1
+                const newTotal = prevFormData.total - product!.price
 
-                });
+                return { ...prevFormData, quantity: newQuantity, total: newTotal }
+
+            } else {
+                const newQuantity = formData.quantity ? formData.quantity + 1 : 1
+                const newTotal = prevFormData.total + product!.price
+                return { ...prevFormData, quantity: newQuantity, total: newTotal }
             }
-        }
+
+        });
+
     };
 
-    const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>, drink: Product) => {
         const { name, checked } = event.target;
         setFormData((prevFormData) => {
             if (checked) {
-                return { ...prevFormData, drinks: [...prevFormData.drinks!, name] };
+                const newTotal = prevFormData.total + drink.price
+
+                return { ...prevFormData, drinks: [...prevFormData.drinks!, drink.name], total: newTotal };
+
             } else {
-                return { ...prevFormData, drinks: prevFormData.drinks!.filter((option) => option !== name) };
+                const newTotal = prevFormData.total - drink.price
+
+                return { ...prevFormData, drinks: prevFormData.drinks!.filter((option) => option !== drink.name), total: newTotal };
             }
         });
     };
     function handleSubmit(event: React.FormEvent) {
         event.preventDefault();
-        console.log("event", event)
         // Atualizar o estado do formulário apenas no envio, usando o evento do formulário
         const formDataFromEvent: any = {
-            name: "exemple",
-            price: 8,
+            name: product?.name,
+            total: formData.total,
             quantity: formData.quantity,
             observation: (event.target as any).observation.value,
             drinks: formData.drinks
@@ -82,7 +89,7 @@ export function ProductDetail() {
 
         // Faça algo com os dados do formulário, por exemplo, envie para um servidor
         console.log('Dados do formulário:', formDataFromEvent);
-        sendOrderBywhatsApp(formDataFromEvent)
+        // sendOrderBywhatsApp(formDataFromEvent)
     }
 
     return (
@@ -102,7 +109,7 @@ export function ProductDetail() {
             </header>
             <main className="w-full md:w-2/3 mx-auto h-full min-h-[65vh] md:min-h-[55vh] flex flex-col items-center px-6 md:px-10 mb-6 bg-dark-900">
                 <h1 className="w-full text-left  text-2xl text-orange-900 font-semibold font-titles mt-4 md:mt-10 mb-3">{product?.name}</h1>
-                <p className="w-full h-full text-whiter-900 text-left text-lg"> <span className=" font-bold text-orange-900">Ingredientes:</span>{product?.ingredients}</p>
+                <p className="w-full h-full text-whiter-900 text-left text-lg"> <span className=" font-bold text-orange-900">Ingredientes: </span>{product?.ingredients}</p>
 
                 <p className="w-full h-full text-xl text-whiter-900 text-left font-semibold mt-4">Preço: <span className="text-green-600">R$:{product?.price.toPrecision(3)}</span></p>
 
@@ -152,10 +159,10 @@ export function ProductDetail() {
                                         name="SucoNatural"
                                         id="optSucoNatural"
                                         className="ml-4"
-                                        onChange={handleCheckboxChange}
+                                        onChange={(event) => handleCheckboxChange(event, item)}
                                     />
                                 </div>
-                        ))}
+                            ))}
                     </div>
 
                     <div className="px-2  my-8 md:py-10">
@@ -170,7 +177,7 @@ export function ProductDetail() {
                             aria-expanded={false}>
                         </textarea>
                     </div>
-                    <p className="w-full text-center text-xl text-white font-semibold mb-4">Total: <span className="text-green-600"> R$ 8,00</span></p>
+                    <p className="w-full text-center text-xl text-white font-semibold mb-4">Total: <span className="text-green-600"> R$ {formData.total.toPrecision(3)}</span></p>
                     <button
                         type="submit"
                         className="w-[90%] md:w-1/2 flex justify-center mx-auto px-3 py-3 gap-2 bg-green-600 text-xl text-whiter-900 font-semibold rounded-lg">
