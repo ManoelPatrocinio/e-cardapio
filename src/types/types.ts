@@ -10,8 +10,8 @@ export type Product = {
 
 export type Order={
     product: Product | null;
-    observation?: string;
     quantity: number;
-    total:number;
     drinks ?: string[]
+    observation?: string;
+    total:number;
 }

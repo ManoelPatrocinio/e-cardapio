@@ -35,7 +35,7 @@ export const Products:Product[] = [
     },
     {
         id:"5",
-        name: "x-calabresa Especial",
+        name: "X-calabresa Especial",
         ingredients: "Pão, Carne, calabresa, presunto, queijo, tomate e alface.",
         price: 11.00,
         category: "hamburguer",

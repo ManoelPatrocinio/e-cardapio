@@ -31,17 +31,30 @@ export function ProductDetail() {
 
 
 
-    function sendOrderBywhatsApp(order: Order) {
-        const mensage = `
-            ${order.quantity} - hamburgues, \n
-            com a(s) bebida(s): ${order.drinks!.length > 0 ? order.drinks : "sem bebidas"},
-            observações:${order.observation!.length > 0 ? order.observation : "sem ob"}
+    function sendOrderByWhatsApp(order: Order) {
+        const drinksList = order.drinks && order.drinks.length > 0 ? order.drinks.join(', ') : "sem bebidas";
+        const observation = order.observation && order.observation.length > 0 ? order.observation : "sem observações";
+    
+        const message = `
+        Olá! Gostaria fazer o pedido:
 
+    *Lanche:* ${order.product?.name}  
 
-        `
-        const wppNumber = import.meta.env.VITE_WHATSAPP_NUMBER
-        window.location.href = `http://api.whatsapp.com/send?l=pt_BR&phone=+${wppNumber}?&text=${mensage} `;
+    *Quantidade:* ${order.quantity}                    
+
+    *Bebida(s):* ${drinksList}
+    
+    *Observações:* ${observation}
+
+    *Total:* R$ ${order.total.toFixed(2)}
+    `;
+    
+        const wppNumber = import.meta.env.VITE_WHATSAPP_NUMBER;
+        const encodedMessage = encodeURIComponent(message.trim()); 
+        window.location.href = `http://api.whatsapp.com/send?l=pt_BR&phone=+${wppNumber}&text=${encodedMessage}`;
     }
+    
+    
     const handleProdQtd = (arg: boolean) => {
 
         setFormData((prevFormData) => {
@@ -79,17 +92,17 @@ export function ProductDetail() {
     function handleSubmit(event: React.FormEvent) {
         event.preventDefault();
         // Atualizar o estado do formulário apenas no envio, usando o evento do formulário
-        const formDataFromEvent: any = {
-            name: product?.name,
-            total: formData.total,
+        const formDataFromEvent: Order = {
+            product: product!,
             quantity: formData.quantity,
             observation: (event.target as any).observation.value,
-            drinks: formData.drinks
+            drinks: formData.drinks,
+            total: formData.total,
         };
 
         // Faça algo com os dados do formulário, por exemplo, envie para um servidor
         console.log('Dados do formulário:', formDataFromEvent);
-        sendOrderBywhatsApp(formDataFromEvent)
+        sendOrderByWhatsApp(formDataFromEvent)
     }
 
     return (
